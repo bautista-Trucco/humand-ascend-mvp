@@ -8,7 +8,7 @@ import { AudioWaveform } from "@/components/audio-waveform"
 import { SessionCard } from "@/components/session-card"
 import { useAudioRecorder, type RecordingPayload } from "@/hooks/use-audio-recorder"
 
-type Screen = "recording" | "writing" | "confirmation"
+type Screen = "recording" | "writing"
 type InputMode = "voice" | "text"
 type RecordingPhase = "question" | "transitioning" | "recorder" | "review"
 
@@ -96,7 +96,8 @@ export default function TalentPulse() {
     
     setPayload(textPayload)
     setInputMode("text")
-    handleScreenChange("confirmation")
+    // TODO: Implement upload flow
+    console.log("Subiendo texto...", textPayload)
   }
 
   return (
@@ -225,7 +226,10 @@ export default function TalentPulse() {
               <div className="h-14 flex items-center justify-center mt-4 relative w-full">
                 {/* Upload Option */}
                 <button
-                  onClick={() => handleScreenChange("confirmation")}
+                  onClick={() => {
+                    // TODO: Implement upload flow
+                    console.log("Subiendo audio...", payload)
+                  }}
                   className={`absolute flex items-center justify-center gap-3 px-10 py-4 rounded-full font-medium text-lg text-primary transition-all duration-700 ease-out active:scale-95 ${
                     recordingPhase === "review" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
                   }`}
@@ -294,61 +298,7 @@ export default function TalentPulse() {
               </Button>
             </div>
           </div>
-        ) : (
-          <div className="space-y-8">
-            {/* Success message */}
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-4">
-                <svg
-                  className="w-8 h-8 text-primary"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </div>
-              <h2 className="text-xl font-semibold text-foreground">
-                {inputMode === "text" ? "Respuesta enviada" : "Grabacion completada"}
-              </h2>
-              <p className="text-sm text-muted-foreground mt-1">
-                Tu respuesta ha sido registrada
-              </p>
-            </div>
-
-            {/* Session Card */}
-            {payload && (
-              <div className="flex justify-center">
-                <SessionCard
-                  payload={{
-                    session_id: payload.session_id,
-                    recorded_at: payload.recorded_at,
-                    duration_seconds: payload.duration_seconds,
-                    file_size_bytes: payload.file_size_bytes,
-                    mime_type: payload.mime_type,
-                  }}
-                />
-              </div>
-            )}
-
-            {/* New session button */}
-            <div className="flex justify-center">
-              <Button
-                variant="outline"
-                onClick={handleNewSession}
-                className="gap-2"
-              >
-                <RotateCcw className="w-4 h-4" />
-                Nueva sesion
-              </Button>
-            </div>
-          </div>
-        )}
+        ) : null}
       </div>
     </main>
   )
