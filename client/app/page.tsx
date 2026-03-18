@@ -14,6 +14,7 @@ type RecordingPhase = "question" | "transitioning" | "recorder" | "review"
 
 export default function TalentPulse() {
   const [screen, setScreen] = useState<Screen>("recording")
+  const [isTransitioningScreen, setIsTransitioningScreen] = useState(false)
   const [payload, setPayload] = useState<RecordingPayload | null>(null)
   const [textResponse, setTextResponse] = useState("")
   const [inputMode, setInputMode] = useState<InputMode>("voice")
@@ -42,6 +43,14 @@ export default function TalentPulse() {
     }, 500)
   }
 
+  const handleScreenChange = (newScreen: Screen) => {
+    setIsTransitioningScreen(true)
+    setTimeout(() => {
+      setScreen(newScreen)
+      setIsTransitioningScreen(false)
+    }, 300) // 300ms fade out
+  }
+
   const handleMicClick = async () => {
     // Animate button press
     setIsButtonPressed(true)
@@ -63,12 +72,14 @@ export default function TalentPulse() {
   }
 
   const handleNewSession = () => {
-    setPayload(null)
-    setTextResponse("")
-    setInputMode("voice")
-    setRecordingPhase("question")
-    setShowContinueHint(false)
-    setScreen("recording")
+    handleScreenChange("recording")
+    setTimeout(() => {
+      setPayload(null)
+      setTextResponse("")
+      setInputMode("voice")
+      setRecordingPhase("question")
+      setShowContinueHint(false)
+    }, 300)
   }
 
   const handleTextSubmit = () => {
@@ -85,12 +96,12 @@ export default function TalentPulse() {
     
     setPayload(textPayload)
     setInputMode("text")
-    setScreen("confirmation")
+    handleScreenChange("confirmation")
   }
 
   return (
     <main className="min-h-screen bg-background flex flex-col items-center justify-center p-6 font-sans">
-      <div className="w-full max-w-lg">
+      <div className={`w-full max-w-lg transition-opacity duration-300 ease-in-out ${isTransitioningScreen ? 'opacity-0' : 'opacity-100'}`}>
 
 
         {screen === "recording" ? (
@@ -187,7 +198,7 @@ export default function TalentPulse() {
 
                 {/* Write Option - Small satellite button */}
                 <button
-                  onClick={() => setScreen("writing")}
+                  onClick={() => handleScreenChange("writing")}
                   className={`absolute -bottom-6 -right-12 w-14 h-14 rounded-full flex items-center justify-center transition-all duration-500 ease-out active:scale-95 z-20 ${
                     isRecording || recordingPhase === "review" ? "opacity-0 scale-50 pointer-events-none" : "opacity-100 scale-100 hover:scale-105"
                   }`}
@@ -214,7 +225,7 @@ export default function TalentPulse() {
               <div className="h-14 flex items-center justify-center mt-4 relative w-full">
                 {/* Upload Option */}
                 <button
-                  onClick={() => setScreen("confirmation")}
+                  onClick={() => handleScreenChange("confirmation")}
                   className={`absolute flex items-center justify-center gap-3 px-10 py-4 rounded-full font-medium text-lg text-primary transition-all duration-700 ease-out active:scale-95 ${
                     recordingPhase === "review" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
                   }`}
@@ -242,7 +253,7 @@ export default function TalentPulse() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setScreen("recording")}
+                onClick={() => handleScreenChange("recording")}
                 className="gap-2 text-muted-foreground hover:text-foreground -ml-2"
               >
                 <ArrowLeft className="w-4 h-4" />
