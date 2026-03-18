@@ -7,24 +7,11 @@ const _roboto = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'TalentPulse - Inteligencia Conversacional',
+  title: 'Humand Ascend',
   description: 'Herramienta de inteligencia conversacional por voz para mapear competencias de empleados',
   generator: 'v0.app',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
+    icon: '/humand.ico',
     apple: '/apple-icon.png',
   },
 }
