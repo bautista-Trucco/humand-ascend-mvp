@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import {
   Table,
   TableBody,
@@ -87,9 +87,8 @@ export function SessionsTable({ sessions }: SessionsTableProps) {
               </TableRow>
             ) : (
               filteredSessions.map((session) => (
-                <>
+                <React.Fragment key={session.id}>
                   <TableRow
-                    key={session.id}
                     className="cursor-pointer hover:bg-muted/50"
                     onClick={() => toggleRow(session.id)}
                   >
@@ -183,7 +182,7 @@ export function SessionsTable({ sessions }: SessionsTableProps) {
                       </TableCell>
                     </TableRow>
                   )}
-                </>
+                </React.Fragment>
               ))
             )}
           </TableBody>
