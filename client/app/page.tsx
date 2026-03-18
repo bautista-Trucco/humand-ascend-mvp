@@ -111,13 +111,18 @@ export default function TalentPulse() {
                     Que hiciste, como lo abordaste y que aprendiste de eso?
                   </p>
                 </div>
-                <p
-                  className={`mt-12 text-sm text-muted-foreground transition-opacity duration-500 ${
+                <div
+                  className={`mt-12 transition-opacity duration-1000 ease-in-out ${
                     showContinueHint ? "opacity-100" : "opacity-0"
                   }`}
                 >
-                  Pulsa para continuar
-                </p>
+                  <p
+                    className="text-lg font-medium text-muted-foreground animate-pulse"
+                    style={{ animationDuration: '3s' }}
+                  >
+                    Pulsa para continuar
+                  </p>
+                </div>
               </div>
             )}
 
