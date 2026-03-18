@@ -22,7 +22,7 @@ export default function TalentPulse() {
   const [isButtonPressed, setIsButtonPressed] = useState(false)
   const { isRecording, analyser, startRecording, stopRecording, error } = useAudioRecorder()
 
-  // Show "clic para continuar" after 4 seconds
+  // Show "Pulsa para continuar" after 4 seconds
   useEffect(() => {
     if (screen === "recording" && recordingPhase === "question") {
       const timer = setTimeout(() => {
@@ -96,28 +96,30 @@ export default function TalentPulse() {
         {screen === "recording" ? (
           <div className="relative min-h-[400px] flex items-center justify-center">
             {/* Question Phase */}
-            <div
-              onClick={handleContinueClick}
-              className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-1000 ease-in-out cursor-pointer ${
-                recordingPhase === "question"
-                  ? "opacity-100 animate-in fade-in duration-[3000ms]"
-                  : "opacity-0 pointer-events-none"
-              }`}
-            >
-              <div className="text-center px-4">
-                <p className="text-xl leading-relaxed text-balance text-primary">
-                  Cuentame sobre un momento en tu trabajo donde resolviste algo dificil.
-                  Que hiciste, como lo abordaste y que aprendiste de eso?
-                </p>
-              </div>
-              <p
-                className={`mt-12 text-sm text-muted-foreground transition-opacity duration-500 ${
-                  showContinueHint ? "opacity-100" : "opacity-0"
+            {recordingPhase !== "recorder" && (
+              <div
+                onClick={handleContinueClick}
+                className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-1000 ease-in-out cursor-pointer ${
+                  recordingPhase === "question"
+                    ? "opacity-100 animate-in fade-in duration-[3000ms]"
+                    : "opacity-0 pointer-events-none"
                 }`}
               >
-                clic para continuar
-              </p>
-            </div>
+                <div className="text-center px-4">
+                  <p className="text-xl leading-relaxed text-balance text-primary">
+                    Cuentame sobre un momento en tu trabajo donde resolviste algo dificil.
+                    Que hiciste, como lo abordaste y que aprendiste de eso?
+                  </p>
+                </div>
+                <p
+                  className={`mt-12 text-sm text-muted-foreground transition-opacity duration-500 ${
+                    showContinueHint ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  Pulsa para continuar
+                </p>
+              </div>
+            )}
 
             {/* Recorder Phase */}
             <div
