@@ -218,7 +218,7 @@ export default function TalentPulse() {
                     {isRecording ? (
                       <Square className="w-12 h-12 text-white drop-shadow-sm" />
                     ) : (
-                      <Mic className={`w-14 h-14 drop-shadow-sm transition-colors duration-300 ${recordingPhase === "review" ? "text-muted-foreground/50" : "text-primary"}`} />
+                      <Mic className={`w-14 h-14 drop-shadow-sm transition-colors duration-300 ${recordingPhase === "review" ? "text-slate-400" : "text-primary"}`} />
                     )}
                   </div>
                   <span className="sr-only">
@@ -302,7 +302,7 @@ export default function TalentPulse() {
                 variant="ghost"
                 size="sm"
                 onClick={() => handleScreenChange("recording")}
-                className="gap-2 text-muted-foreground hover:text-foreground -ml-2"
+                className="gap-2 text-slate-500 hover:text-slate-700 -ml-2"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Volver
@@ -366,7 +366,7 @@ export default function TalentPulse() {
                   border: '1px solid rgba(255, 255, 255, 0.4)',
                 }}
               >
-                <Send className="w-4 h-4 drop-shadow-sm" />
+                <Send className={`w-4 h-4 drop-shadow-sm transition-all duration-300 ${!textResponse.trim() ? "opacity-50" : "opacity-100"}`} />
                 Enviar respuesta
               </button>
             </div>
