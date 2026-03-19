@@ -323,33 +323,36 @@ export default function TalentPulse() {
               {/* Actions */}
               <div className="flex items-center justify-center mt-14 relative w-full h-24">
                 {/* Upload Option */}
-                <div 
-                  className={`absolute transition-all duration-1000 ease-out ${
-                    recordingPhase === "review" ? "opacity-100 translate-y-0 delay-[1800ms]" : "opacity-0 translate-y-4 pointer-events-none"
+                <button
+                  onClick={async () => {
+                    console.log("Subiendo audio...", payload)
+                    await submitHardcodedRecording()
+                  }}
+                  disabled={recordingPhase !== "review"}
+                  className={`w-28 h-28 rounded-full flex items-center justify-center transition-all duration-500 ease-out ${
+                    recordingPhase !== "review"
+                      ? "opacity-50 cursor-not-allowed scale-95"
+                      : "opacity-100 scale-100 hover:scale-105 active:scale-95"
                   }`}
+                  style={{
+                    background: 'linear-gradient(145deg, #e6ebf2, #c1c8d1)',
+                    boxShadow: recordingPhase !== "review"
+                      ? 'inset 4px 4px 8px rgba(163,177,198,0.5), inset -4px -4px 8px rgba(255,255,255,0.8)'
+                      : '8px 8px 20px rgba(163,177,198,0.6), -8px -8px 20px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(255, 255, 255, 0.8), inset -2px -2px 4px rgba(163,177,198,0.2)',
+                    border: '1px solid rgba(255, 255, 255, 0.4)',
+                  }}
                 >
-                  <button
-                    onClick={async () => {
-                      console.log("Subiendo audio...", payload)
-                      await submitHardcodedRecording()
-                    }}
-                    className="w-20 h-20 rounded-full flex items-center justify-center transition-transform duration-200 active:scale-95 hover:scale-105"
+                  <Send 
+                    className={`w-10 h-10 transition-colors duration-300 ${recordingPhase !== "review" ? "text-slate-400" : "text-primary"}`} 
+                    strokeWidth={2}
                     style={{
-                      background: 'linear-gradient(145deg, #e6ebf2, #c1c8d1)',
-                      boxShadow: '8px 8px 20px rgba(163,177,198,0.6), -8px -8px 20px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(255, 255, 255, 0.8), inset -2px -2px 4px rgba(163,177,198,0.2)',
-                      border: '1px solid rgba(255, 255, 255, 0.4)',
+                      filter: recordingPhase !== "review"
+                        ? 'none'
+                        : 'drop-shadow(1px 1px 1px rgba(255,255,255,0.9)) drop-shadow(-1px -1px 1px rgba(163,177,198,0.4))'
                     }}
-                  >
-                    <Send 
-                      className="w-8 h-8 text-primary" 
-                      strokeWidth={2}
-                      style={{
-                        filter: 'drop-shadow(1px 1px 1px rgba(255,255,255,0.9)) drop-shadow(-1px -1px 1px rgba(163,177,198,0.4))'
-                      }}
-                    />
-                    <span className="sr-only">Subir grabación</span>
-                  </button>
-                </div>
+                  />
+                  <span className="sr-only">Subir grabación</span>
+                </button>
               </div>
 
               {/* Error message */}
