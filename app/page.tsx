@@ -7,11 +7,12 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { AudioWaveform } from "@/components/audio-waveform"
 import { SessionCard } from "@/components/session-card"
+import { ThankYouCard } from "@/components/thank-you-card"
 import { useAudioRecorder, type RecordingPayload } from "@/hooks/use-audio-recorder"
 
 const DEFAULT_QUESTION = "Cuentame sobre un momento en tu trabajo donde resolviste algo dificil. Que hiciste, como lo abordaste y que aprendiste de eso?"
 
-type Screen = "recording" | "writing"
+type Screen = "recording" | "writing" | "thankYou"
 type InputMode = "voice" | "text"
 type RecordingPhase = "question" | "transitioning" | "recorder" | "review"
 
@@ -133,6 +134,7 @@ function TalentPulseInner() {
     setInputMode("text")
     console.log("Subiendo texto...", textPayload)
     await submitHardcodedRecording()
+    handleScreenChange("thankYou")
   }
 
   return (
@@ -152,8 +154,15 @@ function TalentPulseInner() {
                     : "opacity-0 pointer-events-none"
                 }`}
               >
-                <div className="text-center px-4">
-                  <p className="text-xl leading-relaxed text-balance text-primary">
+                <div 
+                  className="mx-4 p-6 rounded-3xl"
+                  style={{
+                    background: 'linear-gradient(145deg, #e6ebf2, #c1c8d1)',
+                    boxShadow: '8px 8px 16px rgba(163,177,198,0.6), -8px -8px 16px rgba(255, 255, 255, 0.8)',
+                    border: '1px solid rgba(255, 255, 255, 0.4)',
+                  }}
+                >
+                  <p className="text-xl leading-relaxed text-balance text-slate-700 text-center">
                     {question}
                   </p>
                 </div>
@@ -340,6 +349,7 @@ function TalentPulseInner() {
                   onClick={async () => {
                     console.log("Subiendo audio...", payload)
                     await submitHardcodedRecording()
+                    handleScreenChange("thankYou")
                   }}
                   disabled={recordingPhase !== "review"}
                   className={`w-28 h-28 rounded-full flex items-center justify-center transition-all duration-500 ease-out ${
@@ -465,6 +475,8 @@ function TalentPulseInner() {
               </button>
             </div>
           </div>
+        ) : screen === "thankYou" ? (
+          <ThankYouCard />
         ) : null}
       </div>
     </main>
