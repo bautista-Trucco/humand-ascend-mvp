@@ -154,8 +154,15 @@ function TalentPulseInner() {
                     : "opacity-0 pointer-events-none"
                 }`}
               >
-                <div className="text-center px-4">
-                  <p className="text-xl leading-relaxed text-balance text-primary">
+                <div 
+                  className="mx-4 p-6 rounded-3xl"
+                  style={{
+                    background: 'linear-gradient(145deg, #e6ebf2, #c1c8d1)',
+                    boxShadow: '8px 8px 16px rgba(163,177,198,0.6), -8px -8px 16px rgba(255, 255, 255, 0.8)',
+                    border: '1px solid rgba(255, 255, 255, 0.4)',
+                  }}
+                >
+                  <p className="text-xl leading-relaxed text-balance text-primary text-center">
                     {question}
                   </p>
                 </div>
